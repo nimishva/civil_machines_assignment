@@ -54,16 +54,24 @@
                  </ng-template>
                </div>
            </div>
+
    
-          <div class="form-group">
-           <label for="date" class="labelInput">Reported Date</label>
-           <input type="text" class="form-control" [(ngModel)]="reportedDate" name="date" #date="ngModel" placeholder="Date" required>
-           <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger text-left">
-               <div *ngIf="date.errors.required">
-                   Date is required.
-                 </div>
-           </div>
-       </div>
+        <div class="form-group">
+            <label class="sr-only">Reported Date</label>
+
+        <input [(ngModel)]="reportedDate" [min]="minDate" [max]="maxDate" #reported="ngModel" name="reported" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Reported Date"
+         [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" required>
+         <owl-date-time #dtPicker1></owl-date-time>
+        </div>
+
+
+       <div class="form-group">
+        <label for="date" class="labelInput">Commited Date</label>
+        <input [(ngModel)]="committedDate" [min]="minComDate" [max]="maxDate" #committed="ngModel" name="committed" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Committed Date"
+        [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2" required>
+        <owl-date-time #dtPicker2></owl-date-time>
+    </div>
+
    
    
        <ng-template [ngIf]="viewMode === 'edit'">

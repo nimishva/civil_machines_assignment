@@ -3,6 +3,8 @@ import {faTrash,faWindowClose} from '@fortawesome/free-solid-svg-icons';
 
 import { ApiServiceService } from 'src/app/api-service.service';
 
+import { addMinutes } from 'date-fns';
+
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
@@ -11,6 +13,12 @@ import { ApiServiceService } from 'src/app/api-service.service';
 export class NewTaskComponent implements OnInit {
 
   public loggedUserData;
+
+  //New Task Form Variables
+  public reportedDate:Date = new Date(Date.now());
+  public minDate           = new Date(Date.now());
+  public minComDate        = addMinutes(new Date(Date.now()),10);
+  public maxDate           = new Date(2021, 3, 21, 20, 30);
 
   //Icons
   faTrash = faTrash;

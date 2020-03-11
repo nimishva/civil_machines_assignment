@@ -14,6 +14,8 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
+import { OwlDateTimeModule,OwlNativeDateTimeModule} from 'ng-pick-datetime';
+
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     FontAwesomeModule,
     FormsModule,
     AutocompleteLibModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     RouterModule.forChild([
       {path:'dashboard',component:TaskViewComponent}
     ])
