@@ -1,0 +1,28 @@
+.navigation{
+
+    width:80%;
+    margin-bottom:-12px;
+}
+
+.navigation a{
+    height:45px;
+    background-color: rgb(136, 61, 61);
+    text-align: center;
+    margin-left:.4em;
+    color: white;
+    padding-top: .4em!important;
+    text-decoration: none;
+}
+
+.customNav{
+    background-color: #3D3835;
+    color: #fff;
+}
+.customNav a{
+    color: #fff !important;
+}
+.calendar-col{
+    height: 100vh;
+    background-color: rgb(236, 232, 231);
+    padding: 1.5em;
+}

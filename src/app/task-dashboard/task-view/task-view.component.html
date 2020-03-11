@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg customNav">
+  <a class="navbar-brand" href="#">Resfeber</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+<!-- Navigation bar -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="ml-auto p-2">
+          <div class="textStyle">Welcome <b>{{loggedUser}}</b></div>
+          <div class="textStyle"><a href="#" (click)="logout()">Logout</a></div>
+    
+    
+        </div>
+  
+  </div>
+</nav>
+<!-- Navigation bar ends -->
+<!-- Calendar section  starts -->
+<div class="container-fluid">
+    <div class="row justify-content-center pt-2">
+        <div class="col-md-8 navigation d-flex justify-content-center">
+           <a href="#" class="w-25">Dashboard</a>
+           <a href="#" class="w-25" (click)="newtaskEntry()">New Task</a>
+           <a href="#" class="w-25">Search</a>
+        </div>
+    </div>
+  <div class="row">
+    <div class="col-md-10 offset-md-1 calendar-col">
+        <app-task-data *ngIf="showTaskData"></app-task-data>
+        <app-new-task *ngIf="newTaskWindow"></app-new-task>
+        <!-- <app-personalized-view *ngIf="viewMode=='dashBoard'" [newIssueData]="newIssueData" [allUsers]="allUsers" (emitIssueId)="loadissueData($event)"></app-personalized-view>
+        <app-issue-description *ngIf="viewMode=='entry'"  [newIssueData]="newIssueData" [allUsers]="allUsers" [emittedIssueId]="emittedIssueId" (closeWindow)="closeEntryWindow()"></app-issue-description> -->
+    </div>
+
+  </div> <!-- row-->
+  <!-- Calendar ends -->
+</div> <!-- Container -->
+<!-- Calendar section  starts -->
+
+<ngx-ui-loader></ngx-ui-loader>
+  
+</body>
+</html>

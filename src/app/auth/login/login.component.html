@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>Login</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-7 left-col">
+      </div>
+      <div class="col-sm-5 text-center d-flex align-content-center flex-wrap">
+        <div class="flex-item loginDiv" >
+        <h4 class="mt-4">{{title}}</h4>
+        <div class="login-form" *ngIf=!showOtpBox>
+
+                <div class="form-group" >
+                    <label class="sr-only">Email</label>
+                    <input type="text" id="user" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #email="ngModel" name=email [(ngModel)]="emailInput" placeholder="Email" autofocus>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger text-left">
+                      <div *ngIf="email.errors.required">
+                          email is required.
+                        </div>
+                        <div *ngIf="email.errors.pattern">
+                          email is invalid.
+                        </div>
+                       
+                  </div>
+                </div>
+                <ng-container *ngIf="email.valid && (email.dirty || email.touched)">
+                   <button type="button" (click)="submitForm()" class="btn mt-2">Submit</button>
+                </ng-container>
+               
+        </div>
+
+           <!-- OTP Div  -->
+           <div class="otpInputDiv" *ngIf="showOtpBox">
+            <div class="form-group">
+              <div class="otpTitle">A One Time Password has been sent to <b>{{emailInput}}</b></div>
+              <input type="text" class="form-control" pattern = "\d{1,6}" #otp="ngModel" name=otp [(ngModel)]="otpInput"  placeholder="Enter OTP">
+              <div *ngIf="otp.invalid && (otp.dirty || otp.touched)" class="alert alert-danger text-left">
+                <div *ngIf="otp.errors.required">
+                    Enter OTP.
+                  </div>
+                  <div *ngIf="otp.errors.pattern">
+                    Invalid OTP
+                  </div>  
+            </div>
+          </div>
+
+          <button type="button" (click)="validateOtp()" class="btn mt-2">Submit</button>
+          <button type="button" (click)="closeOtpBox()" class="btn mt-2">Close</button>
+          </div>
+
+      </div>  <!-- loginDiv ends here  -->
+
+          
+
+    </div> <!-- Flex Column ends here -->
+    </div>
+  </div>
+</body>
+</html>

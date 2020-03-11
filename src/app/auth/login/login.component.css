@@ -1,0 +1,82 @@
+.left-col{
+    height:100vh;
+    min-height: 100%;
+    background-image: url('../../../assets/images/left-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.right-col{
+    height: 100vh;
+    min-height: 100%;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding: 0 3em 0 4em;
+}
+.right-col h5{
+    color:#706862;
+}
+.form-group
+{
+    width:100% !important;
+}
+
+.loginTitle{
+    padding: 1em 0;
+}
+
+.otpTitle{
+    padding: 1.5em 0;
+}
+
+
+input {
+    border: none;
+    outline: none !important;
+    border-bottom:1px solid #900C3F;
+    color: rgb(53, 48, 50);
+    padding: 5px;
+    transition: border-bottom 0.3s linear 0.1s;
+    border-radius: 0;
+}
+
+  input:focus {
+     
+      outline: 0 !important;
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+      border-bottom: 3px solid rgb(59, 28, 40); 
+}
+
+input::placeholder{
+    color:#DFDBD2;
+}
+
+button{
+    padding: 5px;
+    color: #fff;
+    width: 100px;
+    margin-right: 1em;
+    background-color: #900C3F;
+}
+
+
+.loginDiv{
+    width: 100%;
+    padding: 1.5em;
+}
+
+.otpInputDiv{
+    position: relative;
+    top:0;
+    width:100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.closeButton{
+    position:absolute;
+    top:2px;
+    right:4px
+}
