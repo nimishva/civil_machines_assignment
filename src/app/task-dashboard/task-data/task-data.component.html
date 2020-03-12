@@ -26,26 +26,87 @@
 
   <m-column field="sl" [sortable]="true"  header="Sl."></m-column>
   <m-column field="title" [sortable]="true"  header="Title"></m-column>
-  <m-column field="status" [sortable]="true" header="Status"></m-column>
-  <m-column field="reporter" [sortable]="true" header="Reporter"></m-column>
-  <m-column field="date" [sortable]="true" header="Date"></m-column>
+  <m-column field="status" [sortable]="true" header="Status" editable="true">
+
+    <ng-template let-col let-row="row" mTemplate="editor">
+     <div class="form-group pt-2">
+      <select class="form-control">
+        <option>Pending</option>
+        <option>Done</option>
+      </select>
+     </div>
+     
+    </ng-template>
+
+  </m-column>
+  <m-column field="reporter" [sortable]="true" header="Reported By"></m-column>
+  <m-column field="date" [sortable]="true" header="Reported Date"></m-column>
 
 
   <ng-template let-row let-index="rowIndex" mTemplate="expansion">
     <div class="container-fluid rowExpansion">
   
    <div class="row pt-2">
-    <div class="col-md-6">Assignee :{{assignee}} </div>
-    <div class="col-md-6">Updated On :</div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="assignee" class="dataTitle">Assignee :</label>
+      <div class="ng-autocomplete">
+        <ng-autocomplete #ngAutoCompleteStatic
+                         [data]="userArray"
+                         name="name"
+                         (selected)="updateIssueData($event,'assignee')"
+                         [(ngModel)]="taskAssignee"
+                         [initialValue]="assigneeEdit"
+                         [placeHolder]="placeholder"
+                         [searchKeyword]="keyword"
+                         [itemTemplate]="itemTemplateStatic"
+                         [notFoundTemplate]="notFoundTemplate" 
+                         required
+                        >
+        </ng-autocomplete>
+        
+        <ng-template #notFoundTemplate let-item>
+         user not found
+       </ng-template>
+       
+        <ng-template #itemTemplateStatic let-item>
+          <a [innerHTML]="item"></a>
+        </ng-template>
+        </div>
+  </div></div>
+   
+  
   </div>
 
   <div class="row pt-2">
-    <div class="col-md-12">Description : </div>
+    <div class="col-md-6"> <span class="dataTitle">Committed On :</span>{{committedOn}}</div>
+    <div class="col-md-6"><span class="dataTitle">Completed On : </span></div>
   </div>
 
   <div class="row pt-2">
-    <div class="col-md-12">Comments : </div>
+    <div class="col-md-12"><span class="dataTitle">Description :</span> {{description}} </div>
+   
   </div>
+
+  <div class="row pt-2">
+    <div class="col-md-12"> <span class="dataTitle">Comments :</span> </div>
+  </div>
+
+  <div class="row pt-2">
+    <div class="col-md-12"><span class="dataTitle">Add New Comments : </span>
+
+      <div class="form-group">
+        <textarea class="form-control"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12"><button type="button" (click)="updateData()" class="btn mt-2 ">Update</button></div>
+  </div>
+
+  
 
   </div>
   </ng-template>

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {faTrash,faWindowClose} from '@fortawesome/free-solid-svg-icons';
 
 import { ApiServiceService } from 'src/app/api-service.service';
 
 import { addMinutes ,subDays, addDays } from 'date-fns';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-new-task',
@@ -11,7 +12,7 @@ import { addMinutes ,subDays, addDays } from 'date-fns';
   styleUrls: ['./new-task.component.css']
 })
 export class NewTaskComponent implements OnInit {
-
+  @ViewChild('newIssueForm',{static:true}) public taskForm:NgForm;
   public loggedUserData;
 
   //New Task Form Variables
@@ -70,7 +71,7 @@ export class NewTaskComponent implements OnInit {
 
   } //getAllUserData ends here 
 
-  submitNewTask(){
+  submitNewTask(form:any){
     let data = {
       title         : this.taskTitle,
       description   : this.taskDescr,
@@ -83,11 +84,19 @@ export class NewTaskComponent implements OnInit {
 
 this.apiServ.newTask(data)
 .subscribe((apiResponse)=>{
-  console.log(apiResponse)
+  if(apiResponse.status == 200){
+    this.resetForm();
+  }
 })
 
 
-  }
+  } //NewTask Creation Ends here
 
+  resetForm(){
+    this.taskForm.reset();
+    this.reportedDate   = new Date(); 
+    this.committedDate = addDays(new Date(Date.now()),1);
+    this.status = "Pending";
+  }
 
 } //Main Class ends here

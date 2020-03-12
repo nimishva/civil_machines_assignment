@@ -1,3 +1,21 @@
 .rowExpansion{
     padding: 1.2em;
 }
+.dataTitle{
+
+    font-size: 1em;
+    font-weight: 300;
+    color: rgb(61, 61, 48);
+}
+
+.ng-autocomplete{
+    width:50% !important;
+}
+
+button{
+    padding: 5px;
+    color: #fff;
+    width: 100px;
+    background-color: #900C3F;
+    margin-right: .4em;
+}

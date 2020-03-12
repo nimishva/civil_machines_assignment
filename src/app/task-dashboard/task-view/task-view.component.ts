@@ -12,6 +12,11 @@ export class TaskViewComponent implements OnInit {
 
   newTaskWindow:boolean = false
   showTaskData:boolean = true;
+
+
+  
+
+
   constructor(private http:ApiServiceService,private router:Router) { }
 
   ngOnInit() {
@@ -27,6 +32,11 @@ export class TaskViewComponent implements OnInit {
   newtaskEntry(){
     this.newTaskWindow = true;
     this.showTaskData = false;
+  }
+
+  showTask(){
+    this.newTaskWindow = false;
+    this.showTaskData = true;
   }
 
   newTaskSubmitted(){
