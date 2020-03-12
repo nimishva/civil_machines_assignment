@@ -32,3 +32,15 @@ input:focus ,select:focus,textarea:focus {
 .ng-autocomplete{
     width:100% !important;
 }
+.hideButton {
+
+    display: none;
+
+}
+button{
+    padding: 5px;
+    color: #fff;
+    width: 100px;
+    background-color: #900C3F;
+    margin-right: .4em;
+}

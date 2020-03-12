@@ -1,10 +1,10 @@
 <div class="newEvent-form">
     
    
-       <form action="" #newIssueForm="ngForm" (ngSubmit)="newTaskSubmitted()"  class="justify-content-center">
+       <form action="" #newIssueForm="ngForm" (ngSubmit)="submitNewTask()" class="justify-content-center">
            <div class="form-group">
              <label for="title" class="labelInput">Title</label>
-               <input type="text" [(ngModel)]="issueTitle" name="title" #title="ngModel" (change)="updateIssueData($event.target.value,'title')" class="form-control" placeholder="Title" required>
+               <input type="text" [(ngModel)]="taskTitle" name="title" #title="ngModel" (change)="updateIssueData($event.target.value,'title')" class="form-control" placeholder="Title" required>
                <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger text-left">
                    <div *ngIf="title.errors.required">
                        title is required.
@@ -16,13 +16,13 @@
            <div class="form-group">
              <label for="Description" class="labelInput">Description</label>
              
-            <textarea class="form-control" [(ngModel)]="value" (change)="updateIssueData($event,'description')" placeholder="Description"></textarea>
+            <textarea class="form-control" [(ngModel)]="taskDescr" name="descr" #descr="ngModel" (change)="updateIssueData($event,'description')" placeholder="Description"></textarea>
             
            </div>
    
            <div class="form-group">
              <label for="status" class="labelInput">Status</label>
-            <select [(ngModel)]="status" name="status1" [value]="in-progress" #status1="ngModel" class="form-control" (change)="updateIssueData($event.target.value,'status')">
+            <select [(ngModel)]="status" name="status1" [value]="Pendings" #status1="ngModel" class="form-control" (change)="updateIssueData($event.target.value,'status')">
              <option *ngFor="let stat of statusArray" [value]="stat">{{stat}}</option>
             </select>
              <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger text-left">
@@ -39,16 +39,20 @@
                                   [data]="userArray"
                                   name="name"
                                   (selected)="updateIssueData($event,'assignee')"
-                                  [(ngModel)]="issueAssignee"
+                                  [(ngModel)]="taskAssignee"
                                   [initialValue]="assigneeEdit"
                                   [placeHolder]="placeholder"
                                   [searchKeyword]="keyword"
                                   [itemTemplate]="itemTemplateStatic"
+                                  [notFoundTemplate]="notFoundTemplate" 
+                                  required
                                  >
                  </ng-autocomplete>
-                 <!-- [notFoundTemplate]="notFoundTemplate" 
-                  notFoundText="Not found"
-                 -->
+                 
+                 <ng-template #notFoundTemplate let-item>
+                  user not found
+                </ng-template>
+                
                  <ng-template #itemTemplateStatic let-item>
                    <a [innerHTML]="item"></a>
                  </ng-template>
@@ -59,17 +63,18 @@
         <div class="form-group">
             <label class="sr-only">Reported Date</label>
 
-        <input [(ngModel)]="reportedDate" [min]="minDate" [max]="maxDate" #reported="ngModel" name="reported" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Reported Date"
+        <input [(ngModel)]="reportedDate" [min]="minDate" [max]="maxDate" readonly #reported="ngModel" name="reported" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Reported Date"
          [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" required>
          <owl-date-time #dtPicker1></owl-date-time>
+         
         </div>
 
 
        <div class="form-group">
         <label for="date" class="labelInput">Commited Date</label>
-        <input [(ngModel)]="committedDate" [min]="minComDate" [max]="maxDate" #committed="ngModel" name="committed" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Committed Date"
+        <input [(ngModel)]="committedDate" [min]="minComDate" [max]="maxDate" readonly #committed="ngModel" name="committed" class="form-control" (ngModelChange)="setEndDate(startDate)" placeholder="Committed Date"
         [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2" required>
-        <owl-date-time #dtPicker2></owl-date-time>
+        <owl-date-time #dtPicker2 ></owl-date-time>
     </div>
 
    
@@ -117,7 +122,7 @@
    
    
    
-           <ng-container *ngIf="viewMode == 'input'"> 
+           <ng-container> 
              <button type="submit" [disabled]="!newIssueForm.form.valid" [ngClass]="{hideButton:hideSubmitButton}" class="btn mt-2 ">Save</button>
              <button type="button"  (click)="resetForm()" [ngClass]="{hideButton:hideSubmitButton}" class="btn mt-2 ">Reset</button>
            </ng-container>

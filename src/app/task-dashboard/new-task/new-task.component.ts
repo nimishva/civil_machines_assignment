@@ -3,7 +3,7 @@ import {faTrash,faWindowClose} from '@fortawesome/free-solid-svg-icons';
 
 import { ApiServiceService } from 'src/app/api-service.service';
 
-import { addMinutes } from 'date-fns';
+import { addMinutes ,subDays, addDays } from 'date-fns';
 
 @Component({
   selector: 'app-new-task',
@@ -15,10 +15,17 @@ export class NewTaskComponent implements OnInit {
   public loggedUserData;
 
   //New Task Form Variables
-  public reportedDate:Date = new Date(Date.now());
-  public minDate           = new Date(Date.now());
-  public minComDate        = addMinutes(new Date(Date.now()),10);
-  public maxDate           = new Date(2021, 3, 21, 20, 30);
+  public taskTitle:string;
+  public taskDescr:string;
+  public statusArray = ['Pending','Done'];
+  public status:string = 'Pending';
+  public taskAssignee:string;
+  public reportedDate:Date  = new Date(Date.now());
+  public committedDate:Date = addDays(new Date(Date.now()),1);
+
+  public minDate            = new Date(Date.now());
+  public minComDate         = addDays(new Date(Date.now()),0);
+  public maxDate            = new Date(2021, 3, 21, 20, 30);
 
   //Icons
   faTrash = faTrash;
@@ -31,6 +38,8 @@ export class NewTaskComponent implements OnInit {
   public placeholderAssignee    = 'Choose assignee';
   public issueAssignee:string;
   public assigneeEdit:string="";
+
+  
 
   constructor(private apiServ:ApiServiceService) { }
 
@@ -60,6 +69,25 @@ export class NewTaskComponent implements OnInit {
    // console.log(this.userArray.length);
 
   } //getAllUserData ends here 
+
+  submitNewTask(){
+    let data = {
+      title         : this.taskTitle,
+      description   : this.taskDescr,
+      status         : this.status,
+      assignee      : this.taskAssignee,
+      reportedDate  : this.reportedDate,
+      reportedBy    : this.loggedUserData.email,
+      committedDate : this.committedDate
+    } //Data Object
+
+this.apiServ.newTask(data)
+.subscribe((apiResponse)=>{
+  console.log(apiResponse)
+})
+
+
+  }
 
 
 } //Main Class ends here
