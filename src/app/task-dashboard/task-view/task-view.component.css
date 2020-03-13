@@ -22,7 +22,8 @@
     color: #fff !important;
 }
 .calendar-col{
-    height: 100vh;
     background-color: rgb(236, 232, 231);
+    height: 100%;
+    min-height: 100vh;
     padding: 1.5em;
 }

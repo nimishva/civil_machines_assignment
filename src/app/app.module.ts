@@ -13,6 +13,7 @@ import { ApiServiceService } from './api-service.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskDashboardModule } from './task-dashboard/task-dashboard.module';
 import { TaskViewComponent } from './task-dashboard/task-view/task-view.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -21,11 +22,13 @@ import { TaskViewComponent } from './task-dashboard/task-view/task-view.componen
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
     FormsModule,
     HttpClientModule,
     TaskDashboardModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       {path:'',component:TaskViewComponent,pathMatch:'full'},
       {path:'login',component:LoginComponent},

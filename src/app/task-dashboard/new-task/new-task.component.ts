@@ -6,6 +6,8 @@ import { ApiServiceService } from 'src/app/api-service.service';
 import { addMinutes ,subDays, addDays } from 'date-fns';
 import { NgForm } from '@angular/forms';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
@@ -42,7 +44,7 @@ export class NewTaskComponent implements OnInit {
 
   
 
-  constructor(private apiServ:ApiServiceService) { }
+  constructor(private apiServ:ApiServiceService,private toaster:ToastrService) { }
 
   ngOnInit() {
 

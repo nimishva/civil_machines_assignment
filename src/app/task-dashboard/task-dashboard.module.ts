@@ -15,13 +15,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { OwlDateTimeModule,OwlNativeDateTimeModule} from 'ng-pick-datetime';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [TaskViewComponent, TaskDataComponent, NewTaskComponent],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     MomentumTableModule,
     NgxUiLoaderModule,
     FontAwesomeModule,

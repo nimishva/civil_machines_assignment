@@ -6,7 +6,50 @@
       <m-column field="date" header="Date"></m-column>
 </m-table>
 </ng-container> -->
+<div class="row">
+  <div class="col-md-3">
 
+    <div class="form-group">
+      <label class="labelInput">Start Date</label>
+
+  <input [(ngModel)]="startDate"
+     #start="ngModel" name="start" 
+    class="form-control" (ngModelChange)="setEndDate($event)" 
+    placeholder="Start Date"
+   [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1" required>
+   <owl-date-time #dtPicker1 [pickerType]="'calendar'"></owl-date-time>
+   
+  </div>
+
+  </div>
+
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="date" class="labelInput">End Date</label>
+      <input [(ngModel)]="endDate"
+       #end="ngModel" name="end" 
+      class="form-control" placeholder="End Date" (ngModelChange)="checkdate($event)"
+      [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2" required>
+      <owl-date-time #dtPicker2 [pickerType]="'calendar'"></owl-date-time>
+    </div>
+   
+  </div>
+
+  <div class="col-md-6 d-flex justify-content-between searchBtn">
+    <div class="form-group justify-content-start"> 
+      <button class="form-control" (click)="searchTask()">Search</button> 
+    </div>
+
+    <div class="form-group justify-content-end">
+      <select class="form-control">
+        <option>My Tasks</option>
+        <option>All</option>
+      </select>
+    </div>
+  
+  </div>
+
+</div>
 <div class="dataTable">
 <m-table *ngIf="dataLoaded" [value]=tableData 
 [sortField]="'sl'" [sortOrder]="1" (onSort)="changeSort($event)"
@@ -90,16 +133,18 @@
 
   <div class="row pt-2">
     <div class="col-md-12"> <span class="dataTitle">Comments : 
-       <div *ngFor="let data of comments">
-          <div class="row pt-2">
-            <div class="col-md-12">
-              <b>{{data.comment}}</b><br>
-              Commented By : {{data.commentBy}} 
+      <div class="row pt-2" *ngFor="let data of comments;let i = index">
+            <div class="col-md-5">
+              {{i+1}}
+              <span class="ml-2"><b>{{data.comment}}</b></span>
             </div>
-          </div>         
 
-       </div> 
-
+            <div class="col-md-5">
+              Commented By :<br>
+              <b> {{data.commentBy}} </b>
+            </div>
+ 
+      </div>  
 
     </span> </div>
   </div>
@@ -119,14 +164,8 @@
   </div>
 
   <input type="hidden" [(ngModel)]="hiddenId" #id="ngModel" name="id">
-
-  <div class="row">
-    <div class="col-md-12"><button type="button" (click)="updateData()" class="btn mt-2 ">Update</button></div>
   </div>
 
-  
-
-  </div>
   </ng-template>
 
   <ng-template mTemplate="emptyTable">

@@ -34,10 +34,18 @@ export class ApiServiceService {
           }
         } //NeTask Funciton ends
 
-
-        public getTasks:any = ()=>{
+        public searchTasks:any = ()=>{
           try {
-            return this.http.get(this.apiUrl+"taskManager/getTasks");
+            return this.http.get(this.apiUrl+"taskManager/searchTasks");
+          } catch (err){
+            return this.handleError(err);
+          }
+        }
+
+
+        public getTasks:any = (data)=>{
+          try {
+            return this.http.post(this.apiUrl+"taskManager/getTasks",data);
           } catch (err){
             return this.handleError(err);
           }

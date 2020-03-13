@@ -3,6 +3,8 @@ import { ApiServiceService } from '../../api-service.service';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-task-view',
   templateUrl: './task-view.component.html',
@@ -19,7 +21,7 @@ export class TaskViewComponent implements OnInit {
   
 
 
-  constructor(private http:ApiServiceService,private router:Router) { }
+  constructor(private http:ApiServiceService,private router:Router,private toaster:ToastrService) { }
 
   ngOnInit() {
 
@@ -30,6 +32,8 @@ export class TaskViewComponent implements OnInit {
     }
 
     this.loggedUser = this.http.getUserInfoFromLocalStorage().email;
+
+    this.toaster.warning(this.loggedUser);
 
   }
 

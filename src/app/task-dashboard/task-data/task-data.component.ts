@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../api-service.service'
 import { StringifyOptions } from 'querystring';
+import { addDays,addYears, subDays ,differenceInDays} from 'date-fns';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-data',
@@ -23,7 +25,7 @@ export class TaskDataComponent implements OnInit {
   public hiddenId:string;
   public newCommentInput:string;
   public completedOn:any;
-
+  public taskStatus :string;
 
    //AutoComplete input
    public name:string;
@@ -33,7 +35,10 @@ export class TaskDataComponent implements OnInit {
    public taskAssignee:string;
    public assigneeEdit:string="";
 
-  constructor(private http:ApiServiceService) { }
+  public startDate :Date =  new Date(Date.now());
+  public endDate :Date =  new Date(Date.now());
+
+  constructor(private http:ApiServiceService,private toaster:ToastrService) { }
 
   ngOnInit() {
 
@@ -70,7 +75,7 @@ export class TaskDataComponent implements OnInit {
             'date'         : this.formatDate(data.reportedDate),
             'assignee'     : data.assignee,
             'comments'     : data.comments.length > 0  ? data.comments : [] ,
-            'committedOn'  : this.formatDate(data.committedDate),
+            'committedOn'  : data.committedDate ? this.formatDate(data.committedDate): "",
             'completedOn'  : data.completedOn ? this.formatDate(data.completedOn) : ""
           }
         )
@@ -101,6 +106,7 @@ export class TaskDataComponent implements OnInit {
     this.tableData.forEach((task)=>{
       console.log(task);
       if(task.id == event.data.id){
+        this.taskStatus   = task.status;
         this.assignee     = task.assignee;
         this.committedOn  = task.committedOn 
         this.comments     = task.comments
@@ -134,17 +140,20 @@ export class TaskDataComponent implements OnInit {
           let taskIndex = this.getIndex(response.data.taskId);
           this.comments.push(getUpdatedData);
           this.newCommentInput = "";
+          this.toaster.success("New Comment Added");
         }else if(field == "assignee"){
           let taskIndex = this.getIndex(response.data.taskId);
           this.tableData[taskIndex].assignee = response.data.assignee;
           this.assignee = response.data.assignee;
+          this.toaster.success("Assignee Updated");
         }else{
           let taskIndex = this.getIndex(response.data.taskId);
           this.tableData[taskIndex].status = response.data.status;
+          this.toaster.success("Status Changed");
         }
         }
       })
-        console.log(this.comments);
+        
     } //UpdateData ends here
 
 
@@ -160,6 +169,25 @@ formatDate(dt){
 
 editInit(event){
   this.editFieldId = event.data.id
-}
+} //EditInit Functions
+
+
+checkdate(event){
+ if(differenceInDays(new Date(event),new Date(this.startDate)) < 0 ){
+  this.toaster.error("Please check the Date");
+ }
+} //Check Date Function ends here
+
+searchTask(){
+  this.http.searchTasks({
+    start : this.startDate,
+    end   : this.endDate
+  })
+  .subscribe((response)=>{
+    console.log(response);
+  })
+} //searchTasks fn ends here
+
+
 
 } //Main Class
