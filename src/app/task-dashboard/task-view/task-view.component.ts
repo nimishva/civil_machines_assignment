@@ -13,6 +13,8 @@ export class TaskViewComponent implements OnInit {
   newTaskWindow:boolean = false
   showTaskData:boolean = true;
 
+  public loggedUser : string;
+
 
   
 
@@ -26,6 +28,8 @@ export class TaskViewComponent implements OnInit {
       this.router.navigate(['/login']);
       return false;
     }
+
+    this.loggedUser = this.http.getUserInfoFromLocalStorage().email;
 
   }
 

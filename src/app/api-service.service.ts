@@ -42,6 +42,14 @@ export class ApiServiceService {
             return this.handleError(err);
           }
         } //getTasks Function ends
+
+        public updateTask:any = (data)=> {
+          try {
+            return this.http.post(this.apiUrl+"taskManager/updateTask",data);
+          } catch (err){
+            return this.handleError(err);
+          }
+        } //Update Tasks ends here
         
 
         public getUserInfoFromLocalStorage = () => {

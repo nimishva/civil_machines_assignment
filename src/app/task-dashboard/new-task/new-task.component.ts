@@ -49,7 +49,7 @@ export class NewTaskComponent implements OnInit {
     this.loggedUserData = this.apiServ.getUserInfoFromLocalStorage();
     this.getAllUserData();
 
-  } //NgOninit ends here
+  }//NgOninit ends here
 
 
 

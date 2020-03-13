@@ -30,7 +30,7 @@
 
     <ng-template let-col let-row="row" mTemplate="editor">
      <div class="form-group pt-2">
-      <select class="form-control">
+      <select class="form-control" [(ngModel)]="statusInput" #status="ngModel" name=status (change)="updateData($event.target.value,'status',$event)">
         <option>Pending</option>
         <option>Done</option>
       </select>
@@ -54,7 +54,7 @@
         <ng-autocomplete #ngAutoCompleteStatic
                          [data]="userArray"
                          name="name"
-                         (selected)="updateIssueData($event,'assignee')"
+                         (selected)="updateData($event,'assignee',hiddenId)"
                          [(ngModel)]="taskAssignee"
                          [initialValue]="assigneeEdit"
                          [placeHolder]="placeholder"
@@ -80,7 +80,7 @@
 
   <div class="row pt-2">
     <div class="col-md-6"> <span class="dataTitle">Committed On :</span>{{committedOn}}</div>
-    <div class="col-md-6"><span class="dataTitle">Completed On : </span></div>
+    <div class="col-md-6"><span class="dataTitle">Completed On : {{completedOn}}</span></div>
   </div>
 
   <div class="row pt-2">
@@ -89,18 +89,36 @@
   </div>
 
   <div class="row pt-2">
-    <div class="col-md-12"> <span class="dataTitle">Comments :</span> </div>
+    <div class="col-md-12"> <span class="dataTitle">Comments : 
+       <div *ngFor="let data of comments">
+          <div class="row pt-2">
+            <div class="col-md-12">
+              <b>{{data.comment}}</b><br>
+              Commented By : {{data.commentBy}} 
+            </div>
+          </div>         
+
+       </div> 
+
+
+    </span> </div>
   </div>
 
   <div class="row pt-2">
     <div class="col-md-12"><span class="dataTitle">Add New Comments : </span>
 
       <div class="form-group">
-        <textarea class="form-control"></textarea>
+        <textarea class="form-control" 
+          [(ngModel)]="newCommentInput" 
+          #newComment="ngModel" name="newComment" 
+          (change)="updateData($event.target.value,'comment',hiddenId)">
+        </textarea>
       </div>
 
     </div>
   </div>
+
+  <input type="hidden" [(ngModel)]="hiddenId" #id="ngModel" name="id">
 
   <div class="row">
     <div class="col-md-12"><button type="button" (click)="updateData()" class="btn mt-2 ">Update</button></div>
