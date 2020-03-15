@@ -29,6 +29,7 @@ export class TaskDataComponent implements OnInit {
   public newCommentInput:string;
   public completedOn:any;
   public taskStatus :string;
+  public emptyMsg:string = "No Data Found";
 
    //AutoComplete input
    public name:string;
@@ -51,7 +52,6 @@ export class TaskDataComponent implements OnInit {
     setTimeout(() => {
       this.dataLoaded = true;
     }, 2000)
-    
 
   }
 
@@ -65,8 +65,7 @@ export class TaskDataComponent implements OnInit {
       return this.removeTime(task.reportedDate).getTime() >= this.removeTime(this.startDate).getTime()
              && 
              this.removeTime(task.reportedDate).getTime() <= this.removeTime(this.endDate).getTime();
-
-      })
+      });
     }
     else { 
     let i =1;
