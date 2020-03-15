@@ -5,6 +5,7 @@ import { addDays,addYears, subDays ,differenceInDays, getDate, getMonth} from 'd
 import { ToastrService } from 'ngx-toastr';
 import { getLocaleDateFormat } from '@angular/common';
 import { getYear } from 'date-fns/esm';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-task-data',
@@ -42,7 +43,7 @@ export class TaskDataComponent implements OnInit {
   public startDate :Date =  new Date(Date.now());
   public endDate :Date =  new Date(Date.now());
 
-  constructor(private http:ApiServiceService,private toaster:ToastrService) { }
+  constructor(private http:ApiServiceService,private toaster:ToastrService,private loader:NgxUiLoaderService) { }
 
   ngOnInit() {
 
@@ -57,6 +58,7 @@ export class TaskDataComponent implements OnInit {
 
 
   loadIssueDescriptionData(search?){
+    
     this.masterData = [];
 
     if(search){
@@ -68,6 +70,8 @@ export class TaskDataComponent implements OnInit {
       });
     }
     else { 
+
+    this.loader.start();
     let i =1;
     this.http.getTasks()
     .subscribe((apiResponse)=>{
@@ -99,8 +103,12 @@ export class TaskDataComponent implements OnInit {
       this.filterData();
       console.log(this.masterData);
     })
-
+    setTimeout(() => {
+      this.loader.stop();
+    }, 1000);
   } //IF Else ends here
+  
+  
   }// loadDescriptionData
 
   filterData(viewMode?){
@@ -152,6 +160,7 @@ export class TaskDataComponent implements OnInit {
 
   updateData(data,field,id){
     console.log(id);
+    this.loader.start();
       let dataObject = {
             taskId    : field == "status" ? this.editFieldId : id,
             field     : field,
@@ -164,14 +173,15 @@ export class TaskDataComponent implements OnInit {
       .subscribe((response)=>{
         console.log(response);
         if(response.status === 200){
-
+          
           if(field == "comment"){
-
+            this.loader.startLoader("commentLoader");
           let getUpdatedData = response.data.comments[response.data.comments.length - 1] ;
           let taskIndex = this.getIndex(response.data.taskId);
           this.comments.push(getUpdatedData);
           this.newCommentInput = "";
           this.toaster.success("New Comment Added");
+          this.loader.stopLoader("commentLoader");
         }else if(field == "assignee"){
           let taskIndex = this.getIndex(response.data.taskId);
           this.tableData[taskIndex].assignee = response.data.assignee;
@@ -184,7 +194,7 @@ export class TaskDataComponent implements OnInit {
         }
         }
       })
-        
+      this.loader.stop();
     } //UpdateData ends here
 
 

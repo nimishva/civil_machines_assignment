@@ -14,7 +14,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskDashboardModule } from './task-dashboard/task-dashboard.module';
 import { TaskViewComponent } from './task-dashboard/task-view/task-view.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxUiLoaderModule,SPINNER,NgxUiLoaderConfig ,POSITION,PB_DIRECTION} from 'ngx-ui-loader';
 
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor:'#FFFFF',
+  bgsOpacity:0.2,
+  bgsPosition: POSITION.bottomCenter,
+  bgsSize: 40,
+  bgsType: SPINNER.rectangleBounce, // background spinner type
+  fgsType: SPINNER.threeStrings, // foreground spinner type
+  fgsColor:'#883D3D',
+  pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  pbThickness: 5 // progress bar thickness
+};
 
 @NgModule({
   declarations: [
@@ -28,8 +40,9 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     HttpClientModule,
     TaskDashboardModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 4000,
       positionClass: 'toast-bottom-center',
       preventDuplicates: true
     }),
