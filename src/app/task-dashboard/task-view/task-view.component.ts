@@ -27,13 +27,11 @@ export class TaskViewComponent implements OnInit {
 
     if(Cookie.get('token') === "" || Cookie.get('token') === undefined || Cookie.get('token') === null )
     {
+      this.toaster.error("Token expired/not available,Please login again")
       this.router.navigate(['/login']);
       return false;
     }
-
     this.loggedUser = this.http.getUserInfoFromLocalStorage().email;
-
-    this.toaster.warning(this.loggedUser);
 
   }
 
@@ -46,26 +44,6 @@ export class TaskViewComponent implements OnInit {
     this.newTaskWindow = false;
     this.showTaskData = true;
   }
-
-  newTaskSubmitted(){
-
-    console.log("Submitted");
-   // this.loader.start();
-    let submittedIssue =  {
-      //eventId:'',
-      title: "Test1",
-      description : "Test1213",
-      status : "Pending",
-      assignee : "nimish.v@rediffmail.com",
-      reportedDate : new Date(Date.now()),
-      reportedBy  : "nimish.va@gmail.com"
-    };
-    //console.log(this.rteObj.imageUploadSuccess)
-    this.http.newTask(submittedIssue);
-    //this.resetForm(); //Resetting form
-    //this.loader.stop();
-  } //newIssueSubmitted Ends here ..
-
 
   logout(){
     Cookie.deleteAll();

@@ -87,6 +87,7 @@ export class NewTaskComponent implements OnInit {
 this.apiServ.newTask(data)
 .subscribe((apiResponse)=>{
   if(apiResponse.status == 200){
+    this.toaster.success("New Task Created");
     this.resetForm();
   }
 })

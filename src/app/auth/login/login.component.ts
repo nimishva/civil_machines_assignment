@@ -3,6 +3,7 @@ import { ApiServiceService } from './../../api-service.service'
 import { Router } from '@angular/router';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,11 @@ export class LoginComponent implements OnInit {
   showOtpBox : boolean = false; 
 
   title : string = "Login"
-  constructor(private apiServ:ApiServiceService,private router:Router) { }
+  constructor(private apiServ:ApiServiceService,private router:Router,private toaster:ToastrService) { }
 
   ngOnInit() {
 
-    console.log(Cookie.get('token'));
+    //console.log(Cookie.get('token'));
 
     if(Cookie.get('token') === "" || Cookie.get('token') === undefined || Cookie.get('token') === null )
     {
@@ -55,11 +56,11 @@ export class LoginComponent implements OnInit {
 
     this.apiServ.signIn({token:this.otpInput,email:this.emailInput})
     .subscribe((apiResponse)=>{
-      console.log(apiResponse);
       if(apiResponse.status === 200){
         Cookie.set('token',this.otpInput.toString());
         this.apiServ.setUserInfoInLocalStorage(apiResponse.data);
         let userName = apiResponse.data.email;
+        this.toaster.success("Redirecting to Dashboard");
         setTimeout(()=>{
           console.log(userName);
           this.router.navigate(['/dashboard']);
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
   }else
   {
     console.log(apiResponse.message);
-    //this.toaster.error(apiResponse.message);
+    this.toaster.error(apiResponse.message);
   }
     })
   } //Validate OTP

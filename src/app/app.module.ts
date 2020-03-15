@@ -28,7 +28,11 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     HttpClientModule,
     TaskDashboardModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true
+    }),
     RouterModule.forRoot([
       {path:'',component:TaskViewComponent,pathMatch:'full'},
       {path:'login',component:LoginComponent},
