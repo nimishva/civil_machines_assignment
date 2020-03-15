@@ -67,5 +67,12 @@ export class TaskViewComponent implements OnInit {
   } //newIssueSubmitted Ends here ..
 
 
+  logout(){
+    Cookie.deleteAll();
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
+
 
 } //Main Class ends here 
