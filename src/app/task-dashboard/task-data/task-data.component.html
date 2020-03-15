@@ -41,9 +41,9 @@
     </div>
 
     <div class="form-group justify-content-end">
-      <select class="form-control">
-        <option>My Tasks</option>
-        <option>All</option>
+      <select class="form-control" (change)="filterData($event.target.value)">
+        <option value="myTasks">My Tasks</option>
+        <option value="all">All</option>
       </select>
     </div>
   
@@ -51,7 +51,7 @@
 
 </div>
 <div class="dataTable">
-<m-table *ngIf="dataLoaded" [value]=tableData 
+<m-table *ngIf="dataLoaded" [value]=masterData 
 [sortField]="'sl'" [sortOrder]="1" (onSort)="changeSort($event)"
          (onRowClick)="rowClick($event)"
          [selectable]="false" [selectionMode]="'multiple'" [selectionHandler]="false" (onRowSelect)="rowSelect($event)" (onRowUnselect)="rowUnselect($event)" (selectionChange)="onSelectionChange($event)" [(selection)]="selectedRows"

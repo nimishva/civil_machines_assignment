@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../api-service.service'
 import { StringifyOptions } from 'querystring';
-import { addDays,addYears, subDays ,differenceInDays} from 'date-fns';
+import { addDays,addYears, subDays ,differenceInDays, getDate, getMonth} from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
+import { getLocaleDateFormat } from '@angular/common';
+import { getYear } from 'date-fns/esm';
 
 @Component({
   selector: 'app-task-data',
@@ -15,6 +17,7 @@ export class TaskDataComponent implements OnInit {
   public editFieldId :any;
 
   public tableData    :any[] = [];
+  public masterData    :any[] = [];
   public dataLoaded   :boolean = false;
   public assignee     :string ;
   public committedOn  :Date;
@@ -53,8 +56,19 @@ export class TaskDataComponent implements OnInit {
   }
 
 
-  loadIssueDescriptionData(){
-    this.tableData = [];
+  loadIssueDescriptionData(search?){
+    this.masterData = [];
+
+    if(search){
+      this.masterData = this.tableData.filter((task)=>{
+
+      return this.removeTime(task.reportedDate).getTime() >= this.removeTime(this.startDate).getTime()
+             && 
+             this.removeTime(task.reportedDate).getTime() <= this.removeTime(this.endDate).getTime();
+
+      })
+    }
+    else { 
     let i =1;
     this.http.getTasks()
     .subscribe((apiResponse)=>{
@@ -73,6 +87,7 @@ export class TaskDataComponent implements OnInit {
             'status'       : data.status,
             'reporter'     : data.reportedBy,
             'date'         : this.formatDate(data.reportedDate),
+            'reportedDate' : new Date(data.reportedDate),
             'assignee'     : data.assignee,
             'comments'     : data.comments.length > 0  ? data.comments : [] ,
             'committedOn'  : data.committedDate ? this.formatDate(data.committedDate): "",
@@ -81,11 +96,28 @@ export class TaskDataComponent implements OnInit {
         )
         i++;
       });
-      //console.log(this.tableData);
+      this.masterData = this.tableData;
+      this.filterData();
+      console.log(this.masterData);
     })
 
-    
+  } //IF Else ends here
   }// loadDescriptionData
+
+  filterData(viewMode?){
+    console.log(viewMode);
+    if(viewMode == "all"){
+      this.masterData = this.tableData;
+    }else if(viewMode == "myTasks"){
+      this.masterData = this.masterData.filter((task)=>{
+        return task.assignee == this.loggedUserData.email;
+      });
+    }else{
+      this.masterData = this.masterData.filter((task)=>{
+        return this.removeTime(task.reportedDate).getTime() == this.removeTime(new Date()).getTime() && task.assignee == this.loggedUserData.email;
+    });
+  }
+}
 
   getAllUserData(){
     this.userArray = [];
@@ -179,15 +211,11 @@ checkdate(event){
 } //Check Date Function ends here
 
 searchTask(){
-  this.http.searchTasks({
-    start : this.startDate,
-    end   : this.endDate
-  })
-  .subscribe((response)=>{
-    console.log(response);
-  })
+ this.loadIssueDescriptionData("search");
 } //searchTasks fn ends here
 
-
+removeTime(dt){
+  return new Date(getYear(dt),getMonth(dt),getDate(dt));
+}
 
 } //Main Class
