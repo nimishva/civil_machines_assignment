@@ -175,13 +175,13 @@ export class TaskDataComponent implements OnInit {
         if(response.status === 200){
           
           if(field == "comment"){
-            this.loader.startLoader("commentLoader");
+            this.loader.start();
           let getUpdatedData = response.data.comments[response.data.comments.length - 1] ;
           let taskIndex = this.getIndex(response.data.taskId);
           this.comments.push(getUpdatedData);
           this.newCommentInput = "";
           this.toaster.success("New Comment Added");
-          this.loader.stopLoader("commentLoader");
+          this.loader.stop();
         }else if(field == "assignee"){
           let taskIndex = this.getIndex(response.data.taskId);
           this.tableData[taskIndex].assignee = response.data.assignee;
